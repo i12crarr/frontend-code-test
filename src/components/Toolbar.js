@@ -1,4 +1,5 @@
 import React from "react";
+import { observer } from "mobx-react";
 import getNewBox from '../utils/getNewBox';
 
 function Toolbar({store}) {
@@ -17,9 +18,13 @@ function Toolbar({store}) {
       <button onClick={handleAdd}>Add Box</button>
       <button onClick={handleRemove}>Remove Box</button>
       <input type="color" />
-      <span>No boxes selected</span>
+      <span> 
+        {
+            `${store.arrayBoxes.length} boxes select`
+        }
+      </span>
     </div>
   );
 }
 
-export default Toolbar;
+export default observer(Toolbar);
