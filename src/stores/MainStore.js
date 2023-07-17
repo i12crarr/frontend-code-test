@@ -11,6 +11,10 @@ const MainStore = types
     return {
       addBox(box) {
         self.boxes.push(box);
+      },
+      removeBox() {
+        self.boxes.length < 1 && alert('No more boxes to delete');
+        self.boxes.pop();
       }
     };
   })
