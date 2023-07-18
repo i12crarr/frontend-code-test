@@ -18,6 +18,16 @@ const BoxModel = types
     setSelected (selected) {
       self.selected = selected
     },
+    setColor (color) {
+      self.color = color
+    },
+    moveSelected (x, y) {
+        const newLeft = Math.min (self.left + x, (1200 - 200))
+        const newTop = Math.min (self.top + y, (675 - 100))
+
+        self.left = Math.max (0, newLeft)
+        self.top = Math.max (0, newTop)  
+    }
   }));
 
 export default BoxModel;

@@ -23,6 +23,7 @@ html,
   width: 1200px;
   height: 675px;
   background-color: aliceblue;
+  border: solid 1px black;
 }
 
 .box {

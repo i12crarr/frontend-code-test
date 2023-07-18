@@ -1,6 +1,7 @@
 import React, {useRef, useEffect} from "react";
 import { observer } from "mobx-react";
 import interact from "interactjs";
+import store from '../stores/MainStore';
 
 
 function BoxDraggable(props) {
@@ -8,29 +9,13 @@ function BoxDraggable(props) {
   const boxRef = useRef(null)
   useEffect (() => {
         interact (boxRef.current).draggable({
-        modifiers: [
-          interact.modifiers.restrictRect({
-            restriction: 'parent',
-            endOnly: true
-          })
-        ],
-
         listeners: {
           move (event) {
-            dragListener(event)
-            props.box.setSelected(true)
+            props.box.setSelected (true)
+            store.moveBoxesSelected(event.dx, event.dy)
           }
         }
-      }).on ('tap', props.box.changeStateSelected)
-
-      function dragListener (event) {
-        let target = event.target
-        let x = (parseFloat(target.getAttribute('data-x')) || props.left) + event.dx
-        let y = (parseFloat(target.getAttribute('data-y')) || props.top) + event.dy
-        target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
-        target.setAttribute('data-x', x)
-        target.setAttribute('data-y', y)
-    }
+      }).on ('dblclick', props.box.changeStateSelected)
   }, [props])
     
   return (
@@ -42,9 +27,9 @@ function BoxDraggable(props) {
         width: props.width,
         height: props.height,
         transform: `translate(${props.left}px, ${props.top}px)`,
-        border: props.box.selected ? 'dashed 4px white' : 'none',
+        boxShadow: props.box.selected ? "0 0 4pt 4pt rgb(60, 60, 60)" : 'none',
         fontWeight: props.box.selected ? 'bold' : 'inherit',
-        color: props.box.selected ? 'white' : 'black'
+        color: props.box.selected ? 'rgb(60, 60, 60)' : 'black'
       }}
       ref={boxRef}
     >

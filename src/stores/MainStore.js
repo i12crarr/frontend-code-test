@@ -15,6 +15,12 @@ const MainStore = types
       removeBox() {
         self.boxes.length < 1 && alert('No more boxes to delete');
         self.boxes.pop();
+      },
+      changeColor(e) {
+        self.arrayBoxes.map(box => box.setColor(e));
+      },
+      moveBoxesSelected(dx, dy) {
+        self.arrayBoxes.map(box => box.moveSelected(dx, dy))
       }
     };
   })

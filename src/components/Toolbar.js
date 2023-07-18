@@ -13,11 +13,15 @@ function Toolbar({store}) {
     store.removeBox();
   }
 
+  const handleChangeColor = (e) => {
+    store.changeColor(e.target.value);
+  }
+
   return (
     <div className="toolbar">
       <button onClick={handleAdd}>Add Box</button>
       <button onClick={handleRemove}>Remove Box</button>
-      <input type="color" />
+      <input type="color" onChange={handleChangeColor}/>
       <span> 
         {
             `${store.arrayBoxes.length} boxes select`

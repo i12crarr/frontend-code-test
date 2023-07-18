@@ -15,6 +15,7 @@ function Canvas({ store }) {
           top={box.top}
           width={box.width}
           height={box.height}
+          moveSelectedBoxes={store.moveSelectedBoxes}
           box={box}
         />
       ))}
