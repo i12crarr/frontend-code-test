@@ -32,10 +32,20 @@ const MainStore = types
         });
         self.saveToHistory();
       },
-      setSelected(selected) {
-        self.boxes.forEach(box => {
-          box.setSelected(selected);
+      setSelectedBox(box) {
+        self.boxes.forEach(b => {
+          if (b === box) {
+            b.setSelected(true);
+          } else {
+            b.setSelected(false);
+          }
         });
+        self.saveToHistory();
+      },
+      changeStateSelected(box){
+       
+          box.changeStateSelected();
+       
         self.saveToHistory();
       },
       toggleBoxSelected(box) {
@@ -60,7 +70,7 @@ const MainStore = types
           self.currentStep--;
           const snapshot = self.history[self.currentStep].map(box => ({
             ...toJS(box),
-            left: box.previousPosition.left, 
+            left: box.previousPosition.left,
             top: box.previousPosition.top,
           }));
           self.boxes.replace(snapshot);

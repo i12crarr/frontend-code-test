@@ -16,8 +16,8 @@ const BoxModel = types
     changeStateSelected () {
       self.selected = !self.selected
     },
-    setSelected (selected) {
-      self.selected = selected
+    setSelected() {
+      self.selected = true;
     },
     setColor (color) {
       self.color = color

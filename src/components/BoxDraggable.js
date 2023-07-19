@@ -11,11 +11,15 @@ function BoxDraggable(props) {
         interact (boxRef.current).draggable({
         listeners: {
           move (event) {
-            store.setSelected(true); // problem watch later
+            props.box.setSelected()
+            store.saveToHistory()
             store.moveBoxesSelected(event.dx, event.dy)
           }
         }
-      }).on ('dblclick', props.box.changeStateSelected)
+      }).on('dblclick', () => {
+        props.box.changeStateSelected();
+        store.saveToHistory();
+      });
   }, [props])
     
   return (
