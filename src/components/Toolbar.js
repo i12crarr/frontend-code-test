@@ -17,10 +17,24 @@ function Toolbar({store}) {
     store.changeColor(e.target.value);
   }
 
+  const handleUndo = () => {
+    store.undo();
+  };
+
+  const handleRedo = () => {
+    store.redo();
+  };
+
   return (
     <div className="toolbar">
       <button onClick={handleAdd}>Add Box</button>
       <button onClick={handleRemove}>Remove Box</button>
+      <button onClick={handleUndo} disabled={store.currentStep <= 0}>
+        Undo
+      </button>
+      <button onClick={handleRedo} disabled={store.currentStep >= store.history.length - 1}>
+        Redo
+      </button>
       <input type="color" onChange={handleChangeColor}/>
       <span> 
         {

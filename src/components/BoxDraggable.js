@@ -11,7 +11,7 @@ function BoxDraggable(props) {
         interact (boxRef.current).draggable({
         listeners: {
           move (event) {
-            props.box.setSelected (true)
+            store.setSelected(true); // problem watch later
             store.moveBoxesSelected(event.dx, event.dy)
           }
         }
