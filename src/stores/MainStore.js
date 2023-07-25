@@ -114,16 +114,4 @@ onSnapshot(store, snapshot => {
     localStorage.setItem('genially-test', JSON.stringify(snapshot))
 })
 
-
-// const store = MainStore.create();
-
-// const box1 = BoxModel.create({
-//  id: uuid(),
-//  color: getRandomColor(),
-//  left: 0,
-//  top: 0
-//});
-
-// store.addBox(box1);
-
 export default store;
