@@ -8,18 +8,31 @@ function BoxDraggable(props) {
 
   const boxRef = useRef(null)
   useEffect (() => {
+        let isMoved = false;
+        let currentRef = boxRef.current;
         interact (boxRef.current).draggable({
         listeners: {
           move (event) {
-            props.box.setSelected()
-            store.saveToHistory()
+            isMoved = true;
+            store.setSelected(props.box)
             store.moveBoxesSelected(event.dx, event.dy)
           }
         }
-      }).on('dblclick', () => {
-        props.box.changeStateSelected();
-        store.saveToHistory();
-      });
+      })
+      const handleMouseUp = () => {
+        isMoved = false; 
+      };
+      const handleMouseDown = () => {
+        if (!isMoved) {
+          store.changeStateSelected(props.box); 
+        }
+      };
+      currentRef.addEventListener("dblclick", handleMouseDown);
+      currentRef.addEventListener("mouseup", handleMouseUp);
+      return () => {
+        currentRef.removeEventListener("dblclick", handleMouseDown);
+        currentRef.removeEventListener("mouseup", handleMouseUp);
+      };
   }, [props])
     
   return (

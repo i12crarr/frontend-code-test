@@ -32,24 +32,12 @@ export const MainStore = types
                 });
                 self.saveToHistory();
             },
-            setSelectedBox(box) {
-                self.boxes.forEach(b => {
-                    if (b === box) {
-                        b.setSelected(true);
-                    } else {
-                        b.setSelected(false);
-                    }
-                });
+            setSelected(box)  {
+                box.setSelected(true);
                 self.saveToHistory();
             },
             changeStateSelected(box) {
-
-                box.changeStateSelected();
-
-                self.saveToHistory();
-            },
-            toggleBoxSelected(box) {
-                box.changeStateSelected();
+                box.selected = !box.selected;
                 self.saveToHistory();
             },
             afterCreate() {

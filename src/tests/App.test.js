@@ -56,3 +56,25 @@ describe("Delete the last added box inside the canvas", () => {
   
     });
   });
+
+  describe("Select and Deselect a box", () => {
+    test("should select and deselect a box correctly", () => {
+      const store = MainStore.create();
+  
+      const newBox = BoxModel.create({
+        id: "test-box-id",
+        color: "#FF0000",
+        left: 100,
+        top: 100,
+        selected: false,
+      });
+      store.addBox(newBox);
+    
+      // Select the box
+      store.changeStateSelected(newBox);
+      expect(newBox.selected).toBe(true);
+      // Deselect the box
+      store.changeStateSelected(newBox);
+      expect(newBox.selected).toBe(false);
+    });
+  });
