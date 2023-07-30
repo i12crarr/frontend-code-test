@@ -38,8 +38,12 @@ function Toolbar({store}) {
       <input type="color" onChange={handleChangeColor}/>
       <span> 
         {
-            `${store.arrayBoxes.length} boxes select`
+            `${store.arrayBoxes.length} boxes select => `
         }
+      </span>
+      <br></br>
+      <span> 
+        {` *Double Click to select or deselect a box*`}
       </span>
     </div>
   );
