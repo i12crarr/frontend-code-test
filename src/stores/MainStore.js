@@ -4,7 +4,7 @@ import uuid from "uuid/v4";
 import BoxModel from "./models/Box";
 import getRandomColor from "../utils/getRandomColor";
 
-const MainStore = types
+export const MainStore = types
     .model("MainStore", {
         boxes: types.array(BoxModel),
         history: types.array(types.array(BoxModel)),
