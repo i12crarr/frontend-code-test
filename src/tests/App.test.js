@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "../components/App";
+import { toJS } from 'mobx';
 import { BoxModel } from "../stores/models/Box";
 import { MainStore } from "../stores/MainStore";
 import { getSnapshot } from "mobx-state-tree";
@@ -234,5 +235,45 @@ describe("Delete the last added box inside the canvas", () => {
 
     // Check that the restored store has the same state as the original store
     expect(getSnapshot(restoredStore)).toEqual(getSnapshot(store));
+    });
+  });
+
+  // TEST UNDO AND REDO FUNCTION
+  describe("Save the state of the app locally and restore it when it loads", () => {  
+    test('should undo and redo correctly', () => {
+      const store = MainStore.create();
+      const box1 = BoxModel.create({
+        id: "box1",
+        color: "#0059FF",
+        left: 100,
+        top: 100,
+      });
+
+      store.addBox(box1);
+
+      
+      // A little change to the box
+      box1.setColor('#BED4FE');
+      store.saveToHistory();
+      
+      // Save snapshot before changes
+      const snapshotAfterChanges = store.history[store.currentStep].map(box => toJS(box));
+
+      // Undo
+      store.undo();
+
+      // Check box return to initial state
+      const boxAfterUndo = store.boxes.find(box => box.id === 'box1');
+      expect(boxAfterUndo.color).toBe('#0059FF'); 
+
+      // Redo
+      store.redo();
+
+      // Check the box return to the state of color change
+      const boxAfterRedo = store.boxes.find(box => box.id === 'box1');
+      expect(boxAfterRedo.color).toBe('#BED4FE'); 
+
+      // Check the state of store after the change and before of redo action
+      expect(store.history[store.currentStep].map(box => toJS(box))).toEqual(snapshotAfterChanges);
     });
   });
