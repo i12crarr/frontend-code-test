@@ -25,8 +25,13 @@ function Toolbar({store}) {
     store.redo();
   };
 
+  const handleReset = () => {
+    store.resetState();
+  };
+
   return (
     <div className="toolbar">
+      <button onClick={handleReset}>Reset State</button>
       <button onClick={handleAdd}>Add Box</button>
       <button onClick={handleRemove}>Remove Box</button>
       <button onClick={handleUndo} disabled={store.currentStep <= 0}>
@@ -41,7 +46,6 @@ function Toolbar({store}) {
             `${store.arrayBoxes.length} boxes select => `
         }
       </span>
-      <br></br>
       <span> 
         {` *Double Click to select or deselect a box*`}
       </span>

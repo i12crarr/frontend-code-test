@@ -12,6 +12,10 @@ export const MainStore = types
     })
     .actions(self => {
         return {
+            resetState() {
+                localStorage.removeItem("genially-test");
+                window.location.reload();
+            },
             addBox(box) {
                 self.boxes.push(box);
                 self.saveToHistory();

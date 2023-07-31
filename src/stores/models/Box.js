@@ -1,6 +1,6 @@
 import { types } from "mobx-state-tree";
 
-const BoxModel = types
+export const BoxModel = types
     .model("Box", {
         id: types.identifier,
         width: 200,

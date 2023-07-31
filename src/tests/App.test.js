@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "../components/App";
-import BoxModel from "../stores/models/Box";
+import { BoxModel } from "../stores/models/Box";
 import { MainStore } from "../stores/MainStore";
+import { getSnapshot } from "mobx-state-tree";
 
 test("Renders correctly the app", () => {
     const div = document.createElement("div");
@@ -201,5 +202,37 @@ describe("Delete the last added box inside the canvas", () => {
       expect(box2.left).toBe(200);
       expect(box2.top).toBe(200);
       expect(box2.color).not.toBe('#FEEEBE');
+    });
+  });
+
+  // TEST SAVE AND RESTORE STATE 
+
+  describe("Save the state of the app locally and restore it when it loads", () => {
+    test("should save and restore the state", () => {
+      const store = MainStore.create();
+  
+      const box1 = BoxModel.create({
+        id: "box-1",
+        color: "#0059FF",
+        left: 100,
+        top: 100,
+      });
+  
+      store.addBox(box1);
+  
+      // Save the state
+      localStorage.setItem("genially-test", JSON.stringify(getSnapshot(store)));
+  
+     // Check that the store is not empty
+    expect(store.boxes.length).toBe(1);
+    expect(store.history.length).toBe(1);
+    expect(store.currentStep).toBe(0);
+
+    // Restore the state
+    const initialState = JSON.parse(localStorage.getItem("genially-test"));
+    const restoredStore = MainStore.create(initialState);
+
+    // Check that the restored store has the same state as the original store
+    expect(getSnapshot(restoredStore)).toEqual(getSnapshot(store));
     });
   });
