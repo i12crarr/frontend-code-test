@@ -62,3 +62,18 @@ If you have any questions about the test, you can contact any of us:
 - Julio (juboba@genially.com)
 
 Good Luck!
+
+# Commnents
+
+- Problems dragging elements using:
+        modifiers: [
+          interact.modifiers.restrictRect({
+            restriction: 'parent',
+          })
+        ],
+ not working with more than one box because the using ref is taken from the box you are dragging, this origin a problem when you drag around two or more boxes because the other boxes go  outside the canvas, at the end I decided to change this method for a manual restriction making limits of canvas. 
+ - Facing problems using two functions for dragging, one for selected box and other for unselected, finally I decided to directly select the box with the dragging action.
+ - Problem with functions redo / undo. I couldn´t make the undo and redo action movement go to position before and after dragging, instead it goes little by little. 
+ - Add a fuction to reset the state of store in case of necessity.
+
+

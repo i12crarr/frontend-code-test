@@ -1,4 +1,4 @@
-import { onSnapshot, types, addMiddleware } from 'mobx-state-tree';
+import { onSnapshot, types } from 'mobx-state-tree';
 import { toJS } from 'mobx';
 import uuid from "uuid/v4";
 import BoxModel from "./models/Box";
@@ -44,14 +44,6 @@ export const MainStore = types
                 box.selected = !box.selected;
                 self.saveToHistory();
             },
-            afterCreate() {
-                addMiddleware(self, (call, next) => {
-                    if (call.name === 'move') {
-                        self.saveToHistory();
-                    }
-                    return next(call);
-                });
-            },
             saveToHistory() {
                 self.currentStep++;
                 self.history.splice(self.currentStep);
@@ -62,8 +54,6 @@ export const MainStore = types
                     self.currentStep--;
                     const snapshot = self.history[self.currentStep].map(box => ({
                         ...toJS(box),
-                        left: box.previousPosition.left,
-                        top: box.previousPosition.top,
                     }));
                     self.boxes.replace(snapshot);
                 }
@@ -96,8 +86,8 @@ if (localStorage.getItem('genially-test')) {
     const box1 = BoxModel.create({
         id: uuid(),
         color: getRandomColor(),
-        left: 0,
-        top: 0
+        left: 200,
+        top: 200
     });
     store.addBox(box1);
 }
